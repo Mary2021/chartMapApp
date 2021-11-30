@@ -36,11 +36,12 @@ export const actions = {
             context.commit('SET_COUNTRIES', response.data.Countries);
         });
     },
-    getCountry(context, slug){
-        this.$axios.get('https://api.covid19api.com/country/' + slug, {
+
+    getCountry(context, chartObject){  
+        this.$axios.get('https://api.covid19api.com/country/' + chartObject.slug, {
             params: {
-                from: '2020-03-01',
-                to: '2020-04-01'
+                from: chartObject.startDate,
+                to: chartObject.endDate
             }
         }).then(response => {
             context.commit('SET_COUNTRY', response.data);

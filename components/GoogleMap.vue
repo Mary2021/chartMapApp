@@ -5,7 +5,7 @@
 <script>
 import { Loader } from "@googlemaps/js-api-loader"
 export default {
-    props: ['center', 'zoom'],
+    props: ['center', 'zoom', 'position'],
     mounted(){
         const loader = new Loader({
             apiKey: this.$config.googleApiKey,
@@ -13,9 +13,13 @@ export default {
         });
 
         loader.load().then(() => {
-            this.map = new google.maps.Map(this.$refs['map'], {
+            this.map = new google.maps.Map(this.$refs['map'],{
                 center: this.center,
                 zoom: this.zoom,
+            });
+            this.marker = new google.maps.Marker({
+                position: this.position,
+                map: this.map
             });
         });
     },
@@ -30,6 +34,9 @@ export default {
         },
         zoom(newZoom){
             this.map.setZoom(newZoom);
+        },
+        position(newPosition){
+            this.marker.setPosition(newPosition);    
         }
     }
 }
